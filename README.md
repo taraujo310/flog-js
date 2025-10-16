@@ -46,6 +46,7 @@ flog-js --score --quiet src/
   -v, --verbose          Show progress and detection details
   -m, --methods-only     Ignore code outside functions
   -z, --zero             Show zero-score methods in grouped output
+  -o, --output=FILE      Save report to file (json/html)
   -h, --help             Show help message
 ```
 
@@ -54,11 +55,16 @@ See [CLI_FLAGS.md](./docs/CLI_FLAGS.md) for detailed documentation.
 ### Programmatic API
 
 ```javascript
-import { analyzePaths, createAnalyzer } from 'flog-js';
+import { analyzePaths, createAnalyzer, createReporterManager } from 'flog-js';
 
 // Analyze files
 const results = await analyzePaths(['src/app.js']);
 console.log(results);
+
+// Generate reports
+const manager = createReporterManager();
+const jsonReport = await manager.generate('json', results);
+const htmlReport = await manager.generate('html', results, { details: true });
 
 // Custom analyzer with modes
 const analyzer = createAnalyzer({
@@ -118,6 +124,49 @@ const rxjsMode = {
 
 const analyzer = createAnalyzer({ modes: [rxjsMode] });
 ```
+
+## Reports
+
+Generate reports in different formats:
+
+```bash
+# JSON report
+flog-js --output=report.json src/
+
+# HTML report with details
+flog-js --output=report.html -d src/
+
+# Save to file while showing progress
+flog-js -o report.json -v src/
+```
+
+### Custom Reporters
+
+Create custom report formats:
+
+```javascript
+import { createReporter, createReporterManager } from 'flog-js';
+
+const markdownReporter = createReporter({
+  id: 'markdown',
+  extension: '.md',
+  generate(results, options) {
+    let md = '# Complexity Report\n\n';
+    for (const r of results) {
+      md += `- **${r.file}**: ${r.total}\n`;
+    }
+    return md;
+  }
+});
+
+const manager = createReporterManager({ 
+  reporters: [markdownReporter] 
+});
+
+const report = await manager.generate('markdown', results);
+```
+
+See [REPORTERS.md](./docs/REPORTERS.md) for detailed documentation.
 
 ## Development
 

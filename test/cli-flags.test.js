@@ -225,4 +225,41 @@ describe('CLI Flags', () => {
       expect(zeroScoreFuncs.length).toBeGreaterThan(0);
     });
   });
+
+  describe('--output flag', () => {
+    it('should save JSON report to file', async () => {
+      const file = path.join(fixturesDir, 'test.js');
+      const outputFile = path.join(fixturesDir, 'report.json');
+      
+      fs.writeFileSync(file, 'function test() { if (true) {} }');
+
+      await analyzePaths([file], { output: outputFile, quiet: true });
+
+      expect(fs.existsSync(outputFile)).toBe(true);
+      const content = fs.readFileSync(outputFile, 'utf-8');
+      const report = JSON.parse(content);
+      
+      expect(report.summary).toBeDefined();
+      expect(report.files).toBeDefined();
+      
+      fs.unlinkSync(outputFile);
+    });
+
+    it('should save HTML report to file', async () => {
+      const file = path.join(fixturesDir, 'test.js');
+      const outputFile = path.join(fixturesDir, 'report.html');
+      
+      fs.writeFileSync(file, 'function test() { if (true) {} }');
+
+      await analyzePaths([file], { output: outputFile, quiet: true });
+
+      expect(fs.existsSync(outputFile)).toBe(true);
+      const content = fs.readFileSync(outputFile, 'utf-8');
+      
+      expect(content).toContain('<!DOCTYPE html>');
+      expect(content).toContain('flog-js Report');
+      
+      fs.unlinkSync(outputFile);
+    });
+  });
 });

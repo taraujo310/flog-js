@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parseSource } from './core/parser.js';
 import { createAnalyzer } from './core/mode-manager.js';
+import { createReporterManager } from './reporters/reporter-manager.js';
 
 function expandGlobs(inputs) {
   const files = new Set();
@@ -105,10 +106,28 @@ export async function analyzePaths(inputs, options = {}) {
     }
   }
   
-  if (options.group) {
-    printGrouped(filtered, options);
+  if (options.output) {
+    const reporterManager = createReporterManager();
+    const format = path.extname(options.output).slice(1) || 'json';
+    
+    try {
+      const content = await reporterManager.generate(format, filtered, options);
+      fs.writeFileSync(options.output, content, 'utf-8');
+      
+      if (!options.quiet) {
+        console.log(`Report saved to: ${options.output}`);
+      }
+    } catch (error) {
+      if (!options.quiet) {
+        console.error(`Error generating report: ${error.message}`);
+      }
+    }
   } else {
-    printTable(filtered, options);
+    if (options.group) {
+      printGrouped(filtered, options);
+    } else {
+      printTable(filtered, options);
+    }
   }
   
   if (errorCount > 0 && !options.quiet) {

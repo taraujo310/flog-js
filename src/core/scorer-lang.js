@@ -31,7 +31,7 @@ function isDynamicCall(node) {
 function fnName(node) {
   if (node.id && node.id.name) return node.id.name;
   if (node.key && node.key.name) return node.key.name;
-  return '<anonymous>';
+  return '';
 }
 
 /** @param {import('@babel/types').File} ast @param {ReturnType<import('./reporter.js').createReporter>} report */
@@ -39,7 +39,7 @@ export function analyzeLang(ast, report) {
   traverse(ast, {
     ClassDeclaration: {
       enter(p) {
-        const name = p.node.id ? p.node.id.name : '<anonymous>';
+        const name = p.node.id ? p.node.id.name : '';
         report.enterClass(name);
       },
       exit() {

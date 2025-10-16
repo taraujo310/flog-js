@@ -3,42 +3,55 @@
 ## Status da Implementação
 
 ✅ **Pacote completamente implementado e funcional**
-✅ **CLI com 10 flags funcionais**
-✅ **53 testes passando**
+✅ **CLI com 11 flags funcionais**
+✅ **Sistema de reporters plugáveis**
+✅ **59 testes passando**
 
 ## Estrutura de Diretórios
 
 ```
 flog-js/
-├── bin/
 │   └── flog-js.js              # Executável CLI
 ├── src/
 │   ├── index.js                # API pública
 │   ├── cli.js                  # Implementação CLI
 │   ├── core/
-│   │   ├── parser.js           # Parser Babel configurado
-│   │   ├── reporter.js         # Sistema de acumulação de scores
-│   │   ├── plugin-api.js       # Contratos JSDoc para plugins
-│   │   ├── scorer-lang.js      # Análise JS/TS genérica
-│   │   ├── scorer-react.js     # Análise React/JSX
-│   │   ├── mode-manager.js     # Gerenciamento de modos
-│   │   └── config.js           # Configuração
-│   └── modes/
-│       ├── lang/
-│       │   └── detect.js       # Detecção de código JS/TS
-│       └── react/
-│           └── detect.js       # Detecção de código React
+│   │   ├── parser.js           # Parser Babel
+│   │   ├── reporter.js         # Acumulador de scores
+│   │   ├── scorer-lang.js      # Análise JavaScript/TypeScript
+│   │   ├── scorer-react.js     # Análise React
+│   │   ├── mode-manager.js     # Gerenciador de modos
+│   │   ├── plugin-api.js       # API para plugins
+│   │   └── config.js           # Configurações
+│   ├── modes/
+│   │   ├── lang/
+│   │   │   └── detect.js       # Detecção JS/TS
+│   │   └── react/
+│   │       └── detect.js       # Detecção React
+│   ├── reporters/
+│   │   ├── reporter-api.js     # API para reporters
+│   │   ├── reporter-manager.js # Gerenciador de reporters
+│   │   ├── json.js             # Reporter JSON
+│   │   └── html.js             # Reporter HTML
+│   └── utils/
+│       └── args-parser.js      # Parser de argumentos CLI
 ├── test/
-│   ├── parser.test.js          # Testes do parser
-│   ├── reporter.test.js        # Testes do reporter
-│   ├── scorer-lang.test.js     # Testes análise JS/TS
-│   ├── scorer-react.test.js    # Testes análise React
-│   ├── detect.test.js          # Testes detecção de modos
-│   ├── mode-manager.test.js    # Testes gerenciador
-│   └── cli.test.js             # Testes CLI
+│   ├── parser.test.js
+│   ├── reporter.test.js
+│   ├── scorer-lang.test.js
+│   ├── scorer-react.test.js
+│   ├── detect.test.js
+│   ├── mode-manager.test.js
+│   ├── reporters.test.js
+│   ├── cli.test.js
+│   └── cli-flags.test.js
 ├── examples/
-│   ├── sample-complex.js       # Exemplo código complexo
+│   ├── sample-complex.js
+│   ├── sample-classes.js
 │   └── sample-react.jsx        # Exemplo componente React
+├── docs/
+│   ├── CLI_FLAGS.md
+│   └── REPORTERS.md
 ├── package.json
 ├── vitest.config.js
 ├── eslint.config.js
@@ -48,7 +61,7 @@ flog-js/
 
 ## Testes
 
-**53 testes passando em 8 arquivos**
+**59 testes passando em 9 arquivos**
 
 ```bash
 npm test                # Roda todos os testes
@@ -63,8 +76,9 @@ npm run test:coverage   # Gera relatório de cobertura
 - ✅ Scorers (lang e react)
 - ✅ Mode detection
 - ✅ Mode manager
+- ✅ Reporter system (JSON/HTML)
 - ✅ CLI básico
-- ✅ CLI flags (todas as 10 flags)
+- ✅ CLI flags (todas as 11 flags)
 
 ## Uso
 
@@ -233,6 +247,7 @@ Tipos documentados via JSDoc, sem necessidade de TypeScript:
 8. **`-v, --verbose`**: Progresso e detalhes de detecção
 9. **`-m, --methods-only`**: Ignora código fora de funções
 10. **`-z, --zero`**: Mostra métodos com score zero no modo `-g`
+11. **`-o, --output=FILE`**: Salva relatório em arquivo (JSON/HTML)
 
 ### Exemplos de Uso
 
@@ -251,16 +266,23 @@ flog-js -c -t 10 src/
 
 # Exemplo: agrupado com todos os métodos (incluindo zeros)
 flog-js -g -z -a src/
+
+# Exemplo: salvar relatório JSON
+flog-js -o report.json src/
+
+# Exemplo: salvar relatório HTML com detalhes
+flog-js -o report.html -d src/
 ```
 
 ## Próximos Passos Sugeridos
 
-1. Implementar formatador JSON (`--format=json`)
-2. Implementar formatador HTML (`--format=html`)
-3. Criar plugin exemplo (RxJS)
-4. Adicionar CI/CD
-5. Publicar no npm
-6. Adicionar cobertura de testes (vitest --coverage)
+1. ✅ ~~Implementar formatador JSON~~ (Implementado)
+2. ✅ ~~Implementar formatador HTML~~ (Implementado)
+3. ✅ ~~Adicionar cobertura de testes~~ (Implementado)
+4. Criar plugin exemplo (RxJS)
+5. Criar reporters adicionais (Markdown, CSV)
+6. Adicionar CI/CD
+7. Publicar no npm
 7. Implementar cache de análise
 8. Suporte a monorepos
 9. Adicionar mais weights customizáveis via `.flogrc.json`

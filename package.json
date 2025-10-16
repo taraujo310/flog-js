@@ -8,8 +8,16 @@
   },
   "exports": {
     ".": "./src/index.js",
-    "./plugin-api": "./src/core/plugin-api.js"
+    "./plugin-api": "./src/core/plugin-api.js",
+    "./reporter-api": "./src/reporters/reporter-api.js"
   },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
   "engines": {
     "node": ">=18.17"
   },

@@ -1,0 +1,28 @@
+# Test files
+test/
+*.test.js
+*.spec.js
+
+# Documentation (detailed)
+docs/
+IMPLEMENTATION_NOTES.md
+
+# Development
+.github/
+.vscode/
+coverage/
+*.log
+
+# Examples
+examples/
+
+# Config files
+.eslintrc*
+eslint.config.js
+vitest.config.js
+.prettierrc*
+
+# Misc
+.DS_Store
+.env*
+*.map

@@ -21,12 +21,15 @@ Options:
   -v, --verbose          Show progress and detection details
   -m, --methods-only     Ignore code outside functions
   -z, --zero             Show zero-score methods in grouped output
+  -o, --output=FILE      Save report to file (json/html)
   -h, --help             Show this help message
 
 Examples:
   flog-js src/
   flog-js --details --threshold=score:10 src/
   flog-js -v -c src/ test/
+  flog-js --output=report.json src/
+  flog-js --output=report.html -d src/
   `);
   process.exit(0);
 }

@@ -10,7 +10,8 @@ export function parseArgs(argv) {
     verbose: false,
     methodsOnly: false,
     zero: false,
-    format: 'table'
+    format: 'table',
+    output: null
   };
   
   const files = [];
@@ -43,6 +44,10 @@ export function parseArgs(argv) {
       options.threshold = argv[++i];
     } else if (arg.startsWith('--format=')) {
       options.format = arg.split('=')[1];
+    } else if (arg.startsWith('--output=') || arg.startsWith('-o=')) {
+      options.output = arg.split('=')[1];
+    } else if (arg === '--output' || arg === '-o') {
+      options.output = argv[++i];
     } else if (!arg.startsWith('-')) {
       files.push(arg);
     }
