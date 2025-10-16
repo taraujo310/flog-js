@@ -1,0 +1,41 @@
+{
+  "name": "flog-js",
+  "version": "0.1.0",
+  "description": "JavaScript code complexity analyzer inspired by flog gem",
+  "type": "module",
+  "bin": {
+    "flog-js": "./bin/flog-js.js"
+  },
+  "exports": {
+    ".": "./src/index.js",
+    "./plugin-api": "./src/core/plugin-api.js"
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "scripts": {
+    "test": "vitest --run",
+    "test:watch": "vitest --watch",
+    "lint": "eslint src"
+  },
+  "keywords": [
+    "complexity",
+    "analysis",
+    "flog",
+    "code-quality",
+    "static-analysis"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/parser": "^7.25.0",
+    "@babel/traverse": "^7.25.0",
+    "@babel/types": "^7.25.0",
+    "picomatch": "^4.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "vitest": "^2.0.0"
+  }
+}
