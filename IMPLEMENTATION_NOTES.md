@@ -53,6 +53,7 @@ flog-js/
 ```bash
 npm test                # Roda todos os testes
 npm run test:watch      # Modo watch
+npm run test:coverage   # Gera relatório de cobertura
 ```
 
 ### Cobertura de Testes

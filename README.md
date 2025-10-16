@@ -130,6 +130,9 @@ npm test
 
 # Run tests in watch mode
 npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
 ```
 
 ## License

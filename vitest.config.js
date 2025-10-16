@@ -6,8 +6,8 @@ export default defineConfig({
     environment: 'node',
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'html'],
-      exclude: ['test/**', 'bin/**', 'node_modules/**']
+      reporter: ['text', 'html', 'lcov'],
+      exclude: ['test/**', 'bin/**', 'examples/**', 'node_modules/**', '*.config.js']
     }
   }
 });
