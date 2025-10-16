@@ -1,91 +1,89 @@
 # Changelog
 
-Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
+All notable changes to this project will be documented in this file.
 
 ## [0.1.0] - 2025-10-16
 
-### ✨ Features Implementadas
+### ✨ Implemented Features
 
-#### Sistema de Reporters Plugáveis
-- **JSON Reporter** - Relatórios estruturados para CI/CD
-- **HTML Reporter** - Relatórios visuais modernos e responsivos
-  - Mostra linhas de código para cada função (`:start-end`)
-  - Identifica funções anônimas como `<anonymous>`
-  - Cores neutras para nomes de arquivo (sem aparência de link)
-- **Reporter Manager** - Gerenciamento de reporters customizados
-- **CLI Flag `--output`** - Salvar relatórios em arquivos
-- **API Programática** - `createReporterManager()`, `jsonReporter`, `htmlReporter`
+#### Pluggable Reporter System
+- **JSON Reporter** - Structured reports for CI/CD
+- **HTML Reporter** - Modern, responsive visual reports
+  - Shows code lines for each function (`:start-end`)
+  - Identifies anonymous functions as `(anonymous)`
+  - Neutral colors for file names (no link appearance)
+- **Reporter Manager** - Custom reporter management
+- **CLI Flag `--output`** - Save reports to files
+- **Programmatic API** - `createReporterManager()`, `jsonReporter`, `htmlReporter`
 
 #### CLI Flags
-- `-a, --all` - Mostra todos os resultados (sem corte de 60%)
-- `-c, --continue` - Continua em erros de parse
-- `-d, --details` - Mostra detalhes de funções com drivers (breakdown completo com `-g`)
-- `-g, --group` - Agrupa resultados por classe/componente
-- `-q, --quiet` - Suprime mensagens de erro
-- `-s, --score` - Mostra apenas score total
-- `-t, --threshold=N` - Corte por porcentagem ou score mínimo
-- `-v, --verbose` - Progresso e detalhes de detecção
-- `-m, --methods-only` - Ignora código fora de funções
-- `-z, --zero` - Mostra métodos com score zero no modo `-g`
-- `-o, --output=FILE` - Salva relatório em arquivo (JSON/HTML)
+- `-a, --all` - Show all results (no 60% cutoff)
+- `-c, --continue` - Continue on parse errors
+- `-d, --details` - Show function details with drivers (complete breakdown with `-g`)
+- `-g, --group` - Group results by class/component
+- `-q, --quiet` - Suppress error messages
+- `-s, --score` - Show only total score
+- `-t, --threshold=N` - Cutoff by percentage or minimum score
+- `-v, --verbose` - Show progress and detection details
+- `-m, --methods-only` - Ignore code outside functions
+- `-z, --zero` - Show zero-score methods in `-g` mode
+- `-o, --output=FILE` - Save report to file (JSON/HTML)
 
-#### Sistema de Modes
-- **Lang Mode** - Análise JavaScript/TypeScript vanilla
-- **React Mode** - Análise React com penalizações específicas JSX
-- **Mode Detection** - Detecção automática de tipo de código
-- **Pluggable Architecture** - Suporte a modes customizados
+#### Mode System
+- **Lang Mode** - Vanilla JavaScript/TypeScript analysis
+- **React Mode** - React analysis with JSX-specific penalties
+- **Mode Detection** - Automatic code type detection
+- **Pluggable Architecture** - Custom mode support
 
-#### Análise de Complexidade
-- **Parser Babel** - Suporte completo a sintaxe moderna
-- **AST Traversal** - Análise profunda do código
-- **Penalty System** - 15+ tipos de penalizações
-- **Function-level Scoring** - Score por função com drivers
-- **Class/Component Grouping** - Agrupamento por classe ou componente
+#### Complexity Analysis
+- **Babel Parser** - Full modern syntax support
+- **AST Traversal** - Deep code analysis
+- **Penalty System** - 15+ penalty types
+- **Function-level Scoring** - Per-function scoring with drivers
+- **Class/Component Grouping** - Group by class or component
 
-#### Testes
-- **59 testes** passando em 9 arquivos
-- **Cobertura** - 68.69% (core >75%)
-- **Vitest** - Framework de testes moderno
+#### Tests
+- **61 tests** passing in 9 files
+- **Coverage** - 68.69% (core >75%)
+- **Vitest** - Modern testing framework
 - **Test Coverage** - `npm run test:coverage`
 
-#### Documentação
-- `README.md` - Overview e quick start
-- `docs/CLI_FLAGS.md` - Documentação completa de flags
-- `docs/REPORTERS.md` - Guia de reporters
-- `IMPLEMENTATION_NOTES.md` - Notas técnicas
-- `COVERAGE.md` - Análise de cobertura
-- Diversos documentos de implementação específicos
+#### Documentation
+- `README.md` - Overview and quick start
+- `docs/CLI_FLAGS.md` - Complete flags documentation
+- `docs/REPORTERS.md` - Reporters guide
+- `docs/COVERAGE.md` - Coverage analysis
 
-### 🎯 Funcionalidades Principais
+### 🎯 Main Features
 
-#### Análise de Código
+#### Code Analysis
 ```bash
-# Análise básica
+# Basic analysis
 flog-js src/
 
-# Com detalhes e agrupamento
+# With details and grouping
 flog-js -g -d src/
 
-# Filtrar por complexidade
+# Filter by complexity
 flog-js --threshold=score:20 src/
 
-# Apenas métodos (ignorar top-level)
+# Methods only (ignore top-level)
 flog-js -m src/
 ```
 
-#### Geração de Relatórios
+#### Report Generation
 ```bash
-# JSON para CI/CD
+# JSON for CI/CD
 flog-js --output=report.json src/
 
-# HTML visual
+# Visual HTML
 flog-js --output=report.html -d src/
 
-# Combinado com outras flags
+# Combined with other flags
 flog-js -o report.json -d -a src/
 ```
 
-#### API Programática
+#### Programmatic API
 ```javascript
 import { 
   analyzePaths, 
@@ -95,16 +93,16 @@ import {
   htmlReporter
 } from 'flog-js';
 
-// Análise
+// Analysis
 const results = await analyzePaths(['src/']);
 
-// Relatórios
+// Reports
 const manager = createReporterManager();
 const json = await manager.generate('json', results);
 const html = await manager.generate('html', results, { details: true });
 ```
 
-### 📊 Penalizações
+### 📊 Penalties
 
 #### JavaScript/TypeScript
 - `IfStatement`: 1.0
@@ -152,15 +150,15 @@ src/
     └── args-parser.js
 ```
 
-### 🔧 Dependências
+### 🔧 Dependencies
 
-**Produção:**
+**Production:**
 - `@babel/parser` ^7.25.0
 - `@babel/traverse` ^7.25.0
 - `@babel/types` ^7.25.0
 - `picomatch` ^4.0.0
 
-**Desenvolvimento:**
+**Development:**
 - `vitest` ^2.0.0
 - `@vitest/coverage-v8` ^2.0.0
 - `eslint` ^9.0.0
@@ -180,56 +178,55 @@ src/
 
 ### 🚀 Performance
 
-- **Parser** - Babel otimizado
-- **Zero-compile** - Pure ESM, sem build
-- **Incremental** - Análise arquivo por arquivo
-- **Streaming** - Output progressivo
+- **Parser** - Optimized Babel
+- **Zero-compile** - Pure ESM, no build step
+- **Incremental** - File-by-file analysis
+- **Streaming** - Progressive output
 
-### 🎨 Qualidade
+### 🎨 Quality
 
-- ✅ **ESLint** - Linting configurado
-- ✅ **Prettier** - Formatação consistente
-- ✅ **Vitest** - Testes rápidos
+- ✅ **ESLint** - Configured linting
+- ✅ **Prettier** - Consistent formatting
+- ✅ **Vitest** - Fast tests
 - ✅ **TypeScript JSDoc** - Type hints
-- ✅ **Code Coverage** - Métricas de cobertura
+- ✅ **Code Coverage** - Coverage metrics
 
-### 📚 Exemplos
+### 📚 Examples
 
-**Arquivos de exemplo incluídos:**
-- `examples/sample-complex.js` - Funções complexas
-- `examples/sample-classes.js` - Classes JavaScript
-- `examples/sample-components.jsx` - Componentes React
-- `examples/sample-with-zeros.js` - Métodos simples
+**Included example files:**
+- `examples/sample-complex.js` - Complex functions
+- `examples/sample-classes.js` - JavaScript classes
+- `examples/sample-components.jsx` - React components
 
 ### 🐛 Bug Fixes
 
-Nenhum (versão inicial)
+None (initial release)
 
 ### ⚠️ Breaking Changes
 
-Nenhum (versão inicial)
+None (initial release)
 
-### 🔜 Próximos Passos
+### 🔜 Next Steps
 
-1. Criar reporters adicionais (Markdown, CSV)
-2. Adicionar CI/CD
-3. Publicar no npm
-4. Criar plugin exemplo (RxJS)
-5. Suporte a monorepos
-6. Cache de análise
-7. Configuração via `.flogrc.json` completa
+1. Create additional reporters (Markdown, CSV)
+2. Add CI/CD
+3. Publish to npm
+4. Create example plugin (RxJS)
+5. Monorepo support
+6. Analysis caching
+7. Complete `.flogrc.json` configuration
 
 ---
 
-## Formato
+## Format
 
-Este changelog segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
+This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-### Tipos de Mudanças
+### Change Types
 
-- **Added** - Para novas funcionalidades
-- **Changed** - Para mudanças em funcionalidades existentes
-- **Deprecated** - Para funcionalidades que serão removidas
-- **Removed** - Para funcionalidades removidas
-- **Fixed** - Para correção de bugs
-- **Security** - Para vulnerabilidades de segurança
+- **Added** - For new features
+- **Changed** - For changes in existing functionality
+- **Deprecated** - For soon-to-be removed features
+- **Removed** - For removed features
+- **Fixed** - For bug fixes
+- **Security** - For security vulnerabilities
